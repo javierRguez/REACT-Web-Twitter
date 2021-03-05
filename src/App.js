@@ -1,10 +1,10 @@
 import React from 'react'
-import { Button } from '@material-ui/core'
+import Home from './pages/Home'
 import GlobalStyles from './globalStyles'
 
 const App = () => (
   <React.Fragment>
-    <Button color="primary">Hello World</Button>
+    <Home />
     <GlobalStyles />
   </React.Fragment>
 )

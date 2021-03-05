@@ -10,7 +10,7 @@ const GlobalStyles = createGlobalStyle`
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
-    background-color: #ffffff;
+    background-color: #e5e5e5;
     margin: 0 auto;
     @media screen and (max-width: 768px) {
       overflow-y: auto;
