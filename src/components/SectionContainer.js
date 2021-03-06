@@ -5,19 +5,21 @@ import { Grid, Typography, Card, Divider } from '@material-ui/core'
 const SectionContainer = ({ children, sectionTitle }) => {
   return (
     <Grid container justify="space-around">
-      <Grid item xs={11}>
+      <Grid item xs={12}>
         <Grid container justify="center">
           <Grid item xs={12}>
             <Card variant="outlined">
-              {sectionTitle && (
-                <>
-                  <Typography variant="h6" color="inherit" align="center">
-                    {sectionTitle}
-                  </Typography>
-                  <Divider />
-                </>
-              )}
-              {children}
+              <Grid container direction="column">
+                {sectionTitle && (
+                  <Grid item>
+                    <Typography variant="h6" align="center">
+                      {sectionTitle}
+                    </Typography>
+                    <Divider />
+                  </Grid>
+                )}
+                <Grid item>{children}</Grid>
+              </Grid>
             </Card>
           </Grid>
         </Grid>
