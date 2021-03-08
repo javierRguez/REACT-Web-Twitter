@@ -13,6 +13,14 @@ const GeneralContainer = styled(Grid)`
   height: 55vh;
 `
 
+const NoMessagesContainer = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
 const Wall = ({ dispatch, messages }) => {
   const { messagesModel } = dispatch
   const userId = parseInt(useParams().userId)
@@ -43,7 +51,11 @@ const Wall = ({ dispatch, messages }) => {
           <CircularProgress />
         ) : (
           <ScrollableItem item xs={12}>
-            {messagesToShow && messagesToShow.map((message) => <MessageItem key={message.id} message={message} />)}
+            {messagesToShow?.length > 0 ? (
+              messagesToShow.map((message) => <MessageItem key={message.id} message={message} />)
+            ) : (
+              <NoMessagesContainer>No messages</NoMessagesContainer>
+            )}
           </ScrollableItem>
         )}
       </GeneralContainer>
