@@ -1,18 +1,11 @@
-/* eslint-disable no-unused-vars */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import _ from 'lodash'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
 import { TextField, InputAdornment, Grid } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search'
 import SectionContainer from '../SectionContainer'
 import UserItem from '../UserItem'
 import { ScrollableItem, ListWithoutPadding } from '../Templates'
-
-const GeneralContainer = styled(Grid)`
-  height: 30vh;
-`
 
 const Follow = ({ users }) => {
   const [searchValue, setSearchValue] = useState('')
@@ -26,10 +19,15 @@ const Follow = ({ users }) => {
       setFilteredUsers([])
     }
   }
+
+  useEffect(() => {
+    onChangeSearchField(searchValue)
+  }, [users])
+
   return (
     <SectionContainer sectionTitle="Following">
-      <GeneralContainer container>
-        <Grid item xs={12}>
+      <Grid container>
+        <Grid item xs={12} style={{ padding: '12px' }}>
           <TextField
             value={searchValue}
             onChange={(e) => onChangeSearchField(e.target.value)}
@@ -47,10 +45,10 @@ const Follow = ({ users }) => {
             }}
           />
         </Grid>
-        <ScrollableItem item xs={12} style={{ height: 'calc(100% - 56px)' }}>
-          <ListWithoutPadding>{filteredUsers && filteredUsers.map((user) => <UserItem key={user.id} userName={user.userName} />)}</ListWithoutPadding>
+        <ScrollableItem item xs={12} style={{ maxHeight: '25vh' }}>
+          <ListWithoutPadding>{filteredUsers && filteredUsers.map((user) => <UserItem key={user.id} userInfo={user} />)}</ListWithoutPadding>
         </ScrollableItem>
-      </GeneralContainer>
+      </Grid>
     </SectionContainer>
   )
 }

@@ -1,6 +1,7 @@
-/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import { Grid, CircularProgress } from '@material-ui/core'
 import styled from 'styled-components'
 import SectionContainer from '../SectionContainer'
@@ -9,17 +10,31 @@ import MessageItem from '../MessageItem'
 import { ScrollableItem } from '../Templates'
 
 const GeneralContainer = styled(Grid)`
-  height: 60vh;
+  height: 55vh;
 `
 
-const Wall = ({ messages }) => {
+const Wall = ({ dispatch, messages }) => {
+  const { messagesModel } = dispatch
+  const userId = parseInt(useParams().userId)
   const [isLoading, setIsLoading] = useState(true)
+  const [messagesToShow, setMessagesToShow] = useState([])
+
+  setTimeout(() => {
+    setIsLoading(false)
+  }, 1000)
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 2000)
-  }, [messages])
+    const getMessagesToShow = async () => {
+      let auxMessages = []
+      if (userId) {
+        auxMessages = await messagesModel.getMessagesByUserId(userId)
+      } else {
+        auxMessages = await messagesModel.getAllMessages()
+      }
+      setMessagesToShow(auxMessages)
+    }
+    getMessagesToShow()
+  }, [userId, messages])
 
   return (
     <SectionContainer sectionTitle="Wall">
@@ -28,7 +43,7 @@ const Wall = ({ messages }) => {
           <CircularProgress />
         ) : (
           <ScrollableItem item xs={12}>
-            {messages && messages.map((message) => <MessageItem key={message.id} message={message} />)}
+            {messagesToShow && messagesToShow.map((message) => <MessageItem key={message.id} message={message} />)}
           </ScrollableItem>
         )}
       </GeneralContainer>
@@ -36,7 +51,10 @@ const Wall = ({ messages }) => {
   )
 }
 
-Wall.propTypes = {}
+Wall.propTypes = {
+  dispatch: PropTypes.func,
+  messages: PropTypes.array,
+}
 
 const mapStateToProps = (state) => ({
   messages: state.messagesModel.messages,

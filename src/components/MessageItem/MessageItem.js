@@ -8,7 +8,7 @@ import _ from 'lodash'
 const MessageItem = ({ users, message }) => {
   const user = _.find(users, { id: message.userId })
   return (
-    <ListItem style={{ padding: '24px 16px' }} onClick={() => console.log('test')}>
+    <ListItem style={{ padding: '24px 16px' }}>
       <Grid container alignItems="center" style={{ flexFlow: 'nowrap' }}>
         <Grid item style={{ paddingRight: '12px' }}>
           <Avatar>
