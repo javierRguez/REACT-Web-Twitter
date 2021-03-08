@@ -41,7 +41,7 @@ export default {
       const { messages } = state.messagesModel
       const newMessages = [...messages]
       const idMessage = Math.floor(new Date() / 1000).toString(16)
-      const newMessage = { id: idMessage, userId: 'userId', message: messageValue, date: moment().format('DD/MM/YYYY') }
+      const newMessage = { id: idMessage, userId: 99, message: messageValue, date: moment().format('DD/MM/YYYY') }
       newMessages.unshift(newMessage)
       messagesModel.editProp({ newValue: newMessages, key: 'messages' })
     },

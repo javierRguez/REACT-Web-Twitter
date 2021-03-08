@@ -1,5 +1,11 @@
 const users = [
   {
+    id: 99,
+    userName: 'Admin',
+    email: 'admin@storify.com',
+    isFollowing: false,
+  },
+  {
     id: 1,
     userName: 'Mathilda Crispin',
     email: 'mcrispin0@wikipedia.org',

@@ -2,11 +2,11 @@
 import { useEffect } from 'react'
 import { connect } from 'react-redux'
 
-const DataChecker = ({ children, dispatch, users, messages }) => {
+const DataChecker = ({ children, dispatch }) => {
   const { messagesModel, usersModel } = dispatch
   const loadInitialData = async () => {
-    if (messages.length <= 0) await messagesModel.loadMockData()
-    if (users.length <= 0) await usersModel.loadMockData()
+    await messagesModel.loadMockData()
+    await usersModel.loadMockData()
   }
 
   useEffect(() => {

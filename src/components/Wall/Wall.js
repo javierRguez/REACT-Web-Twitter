@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { Grid, CircularProgress } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import styled from 'styled-components'
 import SectionContainer from '../SectionContainer'
 import MessageItem from '../MessageItem'
@@ -24,12 +24,8 @@ const NoMessagesContainer = styled.div`
 const Wall = ({ dispatch, messages }) => {
   const { messagesModel } = dispatch
   const userId = parseInt(useParams().userId)
-  const [isLoading, setIsLoading] = useState(true)
-  const [messagesToShow, setMessagesToShow] = useState([])
 
-  setTimeout(() => {
-    setIsLoading(false)
-  }, 1000)
+  const [messagesToShow, setMessagesToShow] = useState([])
 
   useEffect(() => {
     const getMessagesToShow = async () => {
@@ -45,19 +41,15 @@ const Wall = ({ dispatch, messages }) => {
   }, [userId, messages])
 
   return (
-    <SectionContainer sectionTitle="Wall">
+    <SectionContainer sectionTitle={userId ? 'Timeline' : 'Wall'}>
       <GeneralContainer container justify="center" alignItems="center">
-        {isLoading ? (
-          <CircularProgress />
-        ) : (
-          <ScrollableItem item xs={12}>
-            {messagesToShow?.length > 0 ? (
-              messagesToShow.map((message) => <MessageItem key={message.id} message={message} />)
-            ) : (
-              <NoMessagesContainer>No messages</NoMessagesContainer>
-            )}
-          </ScrollableItem>
-        )}
+        <ScrollableItem item xs={12}>
+          {messagesToShow?.length > 0 ? (
+            messagesToShow.map((message) => <MessageItem key={message.id} message={message} />)
+          ) : (
+            <NoMessagesContainer>No messages</NoMessagesContainer>
+          )}
+        </ScrollableItem>
       </GeneralContainer>
     </SectionContainer>
   )
